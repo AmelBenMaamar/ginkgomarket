@@ -2,6 +2,7 @@
 require_once '../config/db.php';
 require_once '../config/stripe.php';
 require_once '../vendor/autoload.php';
+require_once '../app/Services/Mailer.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
@@ -17,14 +18,12 @@ class PaymentController {
         $orderId = (int)$_SESSION['pending_order_id'];
         $pdo     = getDB();
 
-        // Récupérer la commande
         $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ? AND user_id = ?");
         $stmt->execute([$orderId, $_SESSION['user']['id']]);
         $order = $stmt->fetch();
         if (!$order) { header('Location: /?url=cart'); exit; }
 
-        // Récupérer les lignes
-        $stmt = $pdo->prepare("SELECT oi.*, p.name, p.image FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
+        $stmt = $pdo->prepare("SELECT oi.*, p.name FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
         $stmt->execute([$orderId]);
         $items = $stmt->fetchAll();
 
@@ -42,7 +41,6 @@ class PaymentController {
             ];
         }
 
-        // Frais de port
         if ($order['shipping_cost'] > 0) {
             $lineItems[] = [
                 'price_data' => [
@@ -71,9 +69,22 @@ class PaymentController {
         $orderId = (int)($_GET['order'] ?? 0);
         $pdo     = getDB();
 
-        // Mettre à jour le statut
         $pdo->prepare("UPDATE orders SET status = 'paid' WHERE id = ?")
             ->execute([$orderId]);
+
+        // Récupérer commande + articles pour l'email
+        $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
+        $stmt->execute([$orderId]);
+        $order = $stmt->fetch();
+
+        $stmt = $pdo->prepare("SELECT oi.*, p.name FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
+        $stmt->execute([$orderId]);
+        $items = $stmt->fetchAll();
+
+        // Envoyer email de confirmation
+        if ($order && !empty($_SESSION['user']['email'])) {
+            Mailer::orderConfirmation($order, $items, $_SESSION['user']['email']);
+        }
 
         unset($_SESSION['pending_order_id']);
 
@@ -83,10 +94,7 @@ class PaymentController {
 
     public function cancel(): void {
         $orderId = (int)($_GET['order'] ?? 0);
-        // Remettre le statut en pending
-        getDB()->prepare("UPDATE orders SET status = 'pending' WHERE id = ?")
-            ->execute([$orderId]);
-
+        getDB()->prepare("UPDATE orders SET status = 'pending' WHERE id = ?")->execute([$orderId]);
         $title = 'Paiement annulé — GinkGoMarket';
         require_once '../app/Views/payment/cancel.php';
     }
