@@ -346,3 +346,127 @@ footer {
 
 /* === SECTIONS === */
 .catalogue h1, .cart h1 { color: var(--dark); margin-bottom: 1rem; }
+
+/* === CHECKOUT === */
+.checkout h1 { color: var(--dark); margin-bottom: 1.5rem; }
+.checkout h2 { color: var(--dark); margin-bottom: 1rem; font-size: 1.2rem; }
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.checkout-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkout-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.95rem;
+}
+
+.checkout-form input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: var(--bg-light);
+}
+
+.checkout-form input:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+.checkout-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.saved-addresses {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.address-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.or-divider {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* === SUCCESS === */
+.success {
+    display: flex;
+    justify-content: center;
+    padding: 4rem 1rem;
+}
+
+.success-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 480px;
+    box-shadow: 0 2px 12px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 64px;
+    margin: 0 auto;
+}
+
+.success-box h1 { color: var(--dark); }
+.success-box p { color: var(--muted); }
+
+.btn-outline {
+    display: inline-block;
+    border: 2px solid var(--green);
+    color: var(--green);
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background: var(--green);
+    color: #fff;
+}
