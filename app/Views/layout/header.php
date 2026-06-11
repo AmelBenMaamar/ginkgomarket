@@ -17,13 +17,16 @@
                     Panier
                     <?php
                     $cartCount = array_sum($_SESSION['cart'] ?? []);
-                    if ($cartCount > 0):
-                    ?>
+                    if ($cartCount > 0): ?>
                     <span class="cart-badge"><?= $cartCount ?></span>
                     <?php endif; ?>
                 </a>
             </li>
-            <li><a href="/user/login">Connexion</a></li>
+            <?php if (!empty($_SESSION['user'])): ?>
+                <li><a href="/?url=user/account">Mon compte</a></li>
+            <?php else: ?>
+                <li><a href="/?url=user/login">Connexion</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

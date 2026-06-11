@@ -1,28 +1,48 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+:root {
+    --bg:        #f0fffb;
+    --bg-light:  #ffffff;
+    --bg-card:   #ffffff;
+    --dark:      #0d3d2e;
+    --green:     #1a6b52;
+    --green-hover: #22896a;
+    --border:    #a8edd8;
+    --shadow:    rgba(13,61,46,0.08);
+    --error:     #c0392b;
+    --error-bg:  #fdecea;
+    --text:      #1a2e27;
+    --muted:     #5a7a6e;
+}
+
 body {
     font-family: 'Georgia', serif;
-    background: #f9f6f0;
-    color: #2c2c2c;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.7;
 }
 
+/* === HEADER === */
 header {
-    background: #2d4a2d;
+    background: #009F74;
     padding: 1rem 2rem;
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 nav .logo {
-    color: #e8f5e8;
+    color: var(--bg);
     font-size: 1.4rem;
     text-decoration: none;
     font-weight: bold;
+    letter-spacing: 0.02em;
 }
 
 nav ul {
@@ -32,39 +52,84 @@ nav ul {
 }
 
 nav ul a {
-    color: #c8e6c8;
+    color: var(--border);
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 nav ul a:hover { color: #fff; }
 
-main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+/* === MAIN === */
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
+/* === HERO === */
 .hero {
     text-align: center;
     padding: 4rem 2rem;
-    background: #e8f5e8;
-    border-radius: 8px;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     margin-bottom: 2rem;
 }
 
-.hero h1 { font-size: 2.5rem; color: #2d4a2d; margin-bottom: 1rem; }
+.hero h1 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+}
 
+.hero p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* === BOUTONS === */
 .btn {
     display: inline-block;
-    background: #2d4a2d;
+    background: var(--green);
     color: #fff;
     padding: 0.6rem 1.4rem;
-    border-radius: 4px;
+    border-radius: 6px;
     text-decoration: none;
     border: none;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 1rem;
+    transition: background 0.2s;
 }
 
-.btn:hover { background: #3d6b3d; }
+.btn:hover { background: var(--green-hover); }
 
+.btn-small {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.btn-small:hover { background: var(--green-hover); }
+
+.btn-danger {
+    background: var(--error);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-danger:hover { background: #a93226; }
+
+/* === GRID PRODUITS === */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -73,32 +138,43 @@ main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
 }
 
 .card {
-    background: #fff;
-    border-radius: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px var(--shadow);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    transition: box-shadow 0.2s;
 }
+
+.card:hover { box-shadow: 0 4px 16px var(--shadow); }
 
 .card img {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 6px;
+    background: var(--bg-light);
 }
 
-.card h3 { font-size: 1.1rem; }
-.price { font-size: 1.2rem; color: #2d4a2d; font-weight: bold; }
-.category { font-size: 0.8rem; color: #888; text-transform: uppercase; }
-.rupture { color: #c0392b; }
+.card h3 { font-size: 1.1rem; color: var(--dark); }
+.price { font-size: 1.2rem; color: var(--green); font-weight: bold; }
+.category { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.rupture { color: var(--error); }
 
+/* === FICHE PRODUIT === */
 .product-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     margin-top: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .product-detail img {
@@ -109,26 +185,14 @@ main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
 
 .product-info { display: flex; flex-direction: column; gap: 1rem; }
 
-footer {
-    text-align: center;
-    padding: 2rem;
-    background: #2d4a2d;
-    color: #c8e6c8;
-    margin-top: 4rem;
-}
+.product-info h1 { color: var(--dark); }
 
-input[type="number"] {
-    width: 70px;
-    padding: 0.4rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-}
+.product-info .description { color: var(--muted); }
 
 /* === PANIER === */
 .cart-badge {
     display: inline-block;
-    background: #c0392b;
+    background: var(--error);
     color: #fff;
     border-radius: 50%;
     width: 20px;
@@ -143,16 +207,23 @@ input[type="number"] {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1.5rem;
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .cart-table th, .cart-table td {
     padding: 0.8rem 1rem;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border);
     text-align: left;
     vertical-align: middle;
 }
 
-.cart-table thead { background: #f0f0f0; }
+.cart-table thead {
+    background: var(--bg-light);
+    color: var(--dark);
+}
 
 .cart-table img {
     width: 50px;
@@ -165,7 +236,8 @@ input[type="number"] {
 
 .cart-table tfoot td {
     font-size: 1.1rem;
-    border-top: 2px solid #2d4a2d;
+    border-top: 2px solid var(--green);
+    background: var(--bg-light);
 }
 
 .cart-actions {
@@ -175,30 +247,102 @@ input[type="number"] {
     margin-top: 1.5rem;
 }
 
-.btn-small {
-    background: #2d4a2d;
-    color: #fff;
-    border: none;
-    padding: 0.3rem 0.7rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.btn-danger {
-    background: #c0392b;
-    color: #fff;
-    border: none;
-        padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    cursor: pointer;
-}
-
 .empty-cart {
     text-align: center;
     padding: 3rem;
     font-size: 1.1rem;
+    color: var(--muted);
 }
 
-.empty-cart a { color: #2d4a2d; }
+.empty-cart a { color: var(--green); }
+
+/* === AUTH === */
+.auth {
+    max-width: 440px;
+    margin: 3rem auto;
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.auth h1 { margin-bottom: 1.5rem; color: var(--dark); }
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.auth-form input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: var(--bg-light);
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+.auth-link {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.auth-link a { color: var(--green); }
+
+.error {
+    background: var(--error-bg);
+    color: var(--error);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+/* === ACCOUNT === */
+.account { max-width: 800px; margin: 0 auto; }
+.account h1 { margin-bottom: 0.5rem; color: var(--dark); }
+.account h2 { margin: 2rem 0 1rem; color: var(--dark); }
+
+.status-pending   { color: #e67e22; }
+.status-paid      { color: var(--green); }
+.status-shipped   { color: #2980b9; }
+.status-delivered { color: var(--dark); }
+.status-cancelled { color: var(--error); }
+
+/* === INPUTS GÉNÉRAUX === */
+input[type="number"] {
+    width: 70px;
+    padding: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-light);
+    margin-right: 0.5rem;
+}
+
+/* === FOOTER === */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #009F74;
+    color: var(--border);
+    margin-top: 4rem;
+    font-size: 0.9rem;
+}
+
+/* === SECTIONS === */
+.catalogue h1, .cart h1 { color: var(--dark); margin-bottom: 1rem; }
