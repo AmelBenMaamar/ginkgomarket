@@ -4,7 +4,7 @@
     <h1>Mon panier</h1>
 
     <?php if (empty($cart)): ?>
-        <p class="empty-cart">Votre panier est vide. <a href="/product">Continuer mes achats</a></p>
+        <p class="empty-cart">Votre panier est vide. <a href="/?url=product">Continuer mes achats</a></p>
     <?php else: ?>
 
     <table class="cart-table">
@@ -26,7 +26,7 @@
                 </td>
                 <td><?= number_format($p['price'], 2) ?> €</td>
                 <td>
-                    <form action="/cart/update" method="POST">
+                    <form action="/?url=cart/update" method="POST">
                         <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
                         <input type="number" name="quantity" value="<?= $cart[$p['id']] ?>" min="1" max="<?= $p['stock'] ?>">
                         <button type="submit" class="btn-small">Mettre à jour</button>
@@ -34,7 +34,7 @@
                 </td>
                 <td><?= number_format($p['price'] * $cart[$p['id']], 2) ?> €</td>
                 <td>
-                    <form action="/cart/remove" method="POST">
+                    <form action="/?url=cart/remove" method="POST">
                         <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
                         <button type="submit" class="btn-danger">✕</button>
                     </form>
@@ -51,10 +51,10 @@
     </table>
 
     <div class="cart-actions">
-        <form action="/cart/clear" method="POST">
+        <form action="/?url=cart/clear" method="POST">
             <button type="submit" class="btn-danger">Vider le panier</button>
         </form>
-        <a href="/checkout" class="btn">Passer la commande →</a>
+        <a href="/?url=checkout" class="btn">Passer la commande →</a>
     </div>
 
     <?php endif; ?>

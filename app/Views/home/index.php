@@ -3,7 +3,7 @@
 <section class="hero">
     <h1>Bienvenue sur GinkGoMarket</h1>
     <p>Produits naturels, vivants et durables.</p>
-    <a href="/ginkgomarket/public/product" class="btn">Voir la boutique</a>
+    <a href="/?url=product" class="btn">Voir la boutique</a>
 </section>
 
 <section class="featured">
@@ -14,7 +14,7 @@
             <img src="/ginkgomarket/uploads/<?= htmlspecialchars($p['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($p['name']) ?>">
             <h3><?= htmlspecialchars($p['name']) ?></h3>
             <p><?= number_format($p['price'], 2) ?> €</p>
-            <a href="/ginkgomarket/public/product/show/<?= $p['id'] ?>" class="btn">Voir</a>
+            <a href="/?url=product/show/<?= $p['id'] ?>" class="btn">Voir</a>
         </div>
         <?php endforeach; ?>
     </div>

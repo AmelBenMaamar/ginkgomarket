@@ -9,7 +9,7 @@
         <p class="description"><?= nl2br(htmlspecialchars($product['description'])) ?></p>
         <p class="stock"><?= $product['stock'] > 0 ? 'En stock (' . $product['stock'] . ' disponibles)' : '<span class="rupture">Rupture de stock</span>' ?></p>
         <?php if ($product['stock'] > 0): ?>
-        <form action="/ginkgomarket/public/cart/add" method="POST">
+        <form action="/?url=cart/add" method="POST">
             <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
             <input type="number" name="quantity" value="1" min="1" max="<?= $product['stock'] ?>">
             <button type="submit" class="btn">Ajouter au panier</button>

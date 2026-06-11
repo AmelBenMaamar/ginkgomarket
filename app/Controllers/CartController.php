@@ -29,14 +29,14 @@ class CartController {
             $_SESSION['cart'][$id] = ($_SESSION['cart'][$id] ?? 0) + $qty;
         }
 
-        header('Location: /cart');
+        header('Location: /?url=cart');
         exit;
     }
 
     public function remove(): void {
         $id = (int)($_POST['product_id'] ?? 0);
         unset($_SESSION['cart'][$id]);
-        header('Location: /cart');
+        header('Location: /?url=cart');
         exit;
     }
 
@@ -50,13 +50,13 @@ class CartController {
             unset($_SESSION['cart'][$id]);
         }
 
-        header('Location: /cart');
+        header('Location: /?url=cart');
         exit;
     }
 
     public function clear(): void {
         unset($_SESSION['cart']);
-        header('Location: /cart');
+        header('Location: /?url=cart');
         exit;
     }
 }

@@ -11,9 +11,9 @@
     <nav>
         <a href="/" class="logo">🌿 GinkGoMarket</a>
         <ul>
-            <li><a href="/product">Boutique</a></li>
+            <li><a href="/?url=product">Boutique</a></li>
             <li>
-                <a href="/cart" class="cart-link">
+                <a href="/?url=cart" class="cart-link">
                     Panier
                     <?php
                     $cartCount = array_sum($_SESSION['cart'] ?? []);

@@ -10,7 +10,7 @@
             <h3><?= htmlspecialchars($p['name']) ?></h3>
             <p class="price"><?= number_format($p['price'], 2) ?> €</p>
             <p class="stock"><?= $p['stock'] > 0 ? 'En stock' : '<span class="rupture">Rupture</span>' ?></p>
-            <a href="/ginkgomarket/public/product/show/<?= $p['id'] ?>" class="btn">Voir le produit</a>
+            <a href="/?url=product/show/<?= $p['id'] ?>" class="btn">Voir le produit</a>
         </div>
         <?php endforeach; ?>
     </div>
