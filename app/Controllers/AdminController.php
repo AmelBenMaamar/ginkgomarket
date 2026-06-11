@@ -53,7 +53,7 @@ class AdminController {
                 $allowed = ['jpg','jpeg','png','webp'];
                 if (in_array($ext, $allowed)) {
                     $filename = uniqid('prod_') . '.' . $ext;
-                    move_uploaded_file($_FILES['image']['tmp_name'], '../uploads/' . $filename);
+                    move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../../public/uploads/' . $filename);
                     $image = $filename;
                 }
             }
@@ -95,7 +95,7 @@ class AdminController {
                 $allowed = ['jpg','jpeg','png','webp'];
                 if (in_array($ext, $allowed)) {
                     $filename = uniqid('prod_') . '.' . $ext;
-                    move_uploaded_file($_FILES['image']['tmp_name'], '../uploads/' . $filename);
+                    move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/../../public/uploads/' . $filename);
                     $image = $filename;
                 }
             }

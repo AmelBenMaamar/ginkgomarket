@@ -5,7 +5,7 @@
     <div class="grid">
         <?php foreach ($products as $p): ?>
         <div class="card">
-            <img src="/ginkgomarket/uploads/<?= htmlspecialchars($p['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($p['name']) ?>">
+            <img src="/uploads/<?= htmlspecialchars($p['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($p['name']) ?>">
             <span class="category"><?= htmlspecialchars($p['category_name'] ?? '') ?></span>
             <h3><?= htmlspecialchars($p['name']) ?></h3>
             <p class="price"><?= number_format($p['price'], 2) ?> €</p>

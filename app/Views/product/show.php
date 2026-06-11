@@ -1,7 +1,7 @@
 <?php require_once '../app/Views/layout/header.php'; ?>
 
 <article class="product-detail">
-    <img src="/ginkgomarket/uploads/<?= htmlspecialchars($product['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+    <img src="/uploads/<?= htmlspecialchars($product['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($product['name']) ?>">
     <div class="product-info">
         <span class="category"><?= htmlspecialchars($product['category_name'] ?? '') ?></span>
         <h1><?= htmlspecialchars($product['name']) ?></h1>

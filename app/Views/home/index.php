@@ -11,7 +11,7 @@
     <div class="grid">
         <?php foreach ($products as $p): ?>
         <div class="card">
-            <img src="/ginkgomarket/uploads/<?= htmlspecialchars($p['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($p['name']) ?>">
+            <img src="/uploads/<?= htmlspecialchars($p['image'] ?? 'placeholder.jpg') ?>" alt="<?= htmlspecialchars($p['name']) ?>">
             <h3><?= htmlspecialchars($p['name']) ?></h3>
             <p><?= number_format($p['price'], 2) ?> €</p>
             <a href="/?url=product/show/<?= $p['id'] ?>" class="btn">Voir</a>
