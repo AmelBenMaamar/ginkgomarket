@@ -91,7 +91,9 @@ class CheckoutController {
         // Vider le panier
         unset($_SESSION['cart']);
 
-        header('Location: /?url=checkout/success&order=' . $orderId);
+        // Stocker l'order en session pour Stripe
+        $_SESSION['pending_order_id'] = $orderId;
+        header('Location: /?url=payment/create');
         exit;
     }
 
