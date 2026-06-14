@@ -2,7 +2,7 @@
 require_once '../config/db.php';
 require_once '../config/stripe.php';
 require_once '../vendor/autoload.php';
-require_once '../app/Services/Mailer.php';
+require_once __DIR__ . '/../Services/Mailer.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;

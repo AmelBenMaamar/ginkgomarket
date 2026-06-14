@@ -1,6 +1,8 @@
 <?php
 require_once '../config/db.php';
 require_once '../config/constants.php';
+require_once '../config/stripe.php';
+require_once '../config/mail.php';
 
 session_start();
 
@@ -11,7 +13,6 @@ $parts = explode('/', $url);
 $controllerName = ucfirst($parts[0] ?? 'home') . 'Controller';
 $action = $parts[1] ?? 'index';
 
-// Route par défaut
 if ($parts[0] === '' || $parts[0] === 'home') {
     $controllerName = 'HomeController';
     $action = 'index';

@@ -22,7 +22,6 @@ class CheckoutController {
             $total += $p['price'] * $_SESSION['cart'][$p['id']];
         }
 
-        // Adresses sauvegardées
         $stmt = $pdo->prepare("SELECT * FROM addresses WHERE user_id = ?");
         $stmt->execute([$_SESSION['user']['id']]);
         $addresses = $stmt->fetchAll();
@@ -37,33 +36,41 @@ class CheckoutController {
             exit;
         }
 
-        $pdo = getDB();
-
-        // Adresse
-        $rue    = trim($_POST['rue']    ?? '');
-        $ville  = trim($_POST['ville']  ?? '');
-        $cp     = trim($_POST['cp']     ?? '');
-        $pays   = trim($_POST['pays']   ?? 'France');
+        $pdo    = getDB();
         $userId = $_SESSION['user']['id'];
+        $savedId = (int)($_POST['saved_address'] ?? 0);
+        $addressId = null;
 
-        // Sauvegarder l'adresse
-        $pdo->prepare("INSERT INTO addresses (user_id, rue, ville, cp, pays) VALUES (?,?,?,?,?)")
-            ->execute([$userId, $rue, $ville, $cp, $pays]);
-        $addressId = $pdo->lastInsertId();
+        if ($savedId > 0) {
+            $stmt = $pdo->prepare("SELECT * FROM addresses WHERE id = ? AND user_id = ?");
+            $stmt->execute([$savedId, $userId]);
+            $addr = $stmt->fetch();
+            if ($addr) {
+                $addressId = $savedId;
+            }
+        }
 
-        // Calcul total + frais de port
+        if ($addressId === null) {
+            $rue   = trim($_POST['rue']   ?? '');
+            $ville = trim($_POST['ville'] ?? '');
+            $cp    = trim($_POST['cp']    ?? '');
+            $pays  = trim($_POST['pays']  ?? 'France');
+            $pdo->prepare("INSERT INTO addresses (user_id, rue, ville, cp, pays) VALUES (?,?,?,?,?)")
+                ->execute([$userId, $rue, $ville, $cp, $pays]);
+            $addressId = $pdo->lastInsertId();
+        }
+
         $ids = implode(',', array_map('intval', array_keys($_SESSION['cart'])));
         $products = $pdo->query("SELECT * FROM products WHERE id IN ($ids)")->fetchAll();
 
-        $total        = 0;
-        $totalWeight  = 0;
+        $total       = 0;
+        $totalWeight = 0;
         foreach ($products as $p) {
             $qty          = $_SESSION['cart'][$p['id']];
             $total       += $p['price'] * $qty;
             $totalWeight += $p['weight_g'] * $qty;
         }
 
-        // Frais de port : gratuit > 50€, sinon 4.90€ < 500g, 6.90€ < 2kg, 9.90€ au-delà
         if ($total >= 50) {
             $shipping = 0;
         } elseif ($totalWeight < 500) {
@@ -74,12 +81,10 @@ class CheckoutController {
             $shipping = 9.90;
         }
 
-        // Créer la commande
         $pdo->prepare("INSERT INTO orders (user_id, status, total, shipping_cost, address_id) VALUES (?,?,?,?,?)")
             ->execute([$userId, 'pending', $total + $shipping, $shipping, $addressId]);
         $orderId = $pdo->lastInsertId();
 
-        // Insérer les lignes de commande + décrémenter stock
         foreach ($products as $p) {
             $qty = $_SESSION['cart'][$p['id']];
             $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase) VALUES (?,?,?,?)")
@@ -88,18 +93,9 @@ class CheckoutController {
                 ->execute([$qty, $p['id']]);
         }
 
-        // Vider le panier
         unset($_SESSION['cart']);
-
-        // Stocker l'order en session pour Stripe
         $_SESSION['pending_order_id'] = $orderId;
         header('Location: /?url=payment/create');
         exit;
-    }
-
-    public function success(): void {
-        $orderId = (int)($_GET['order'] ?? 0);
-        $title   = 'Commande confirmée — GinkGoMarket';
-        require_once '../app/Views/checkout/success.php';
     }
 }

@@ -590,3 +590,37 @@ footer {
     flex-direction: column;
     gap: 0.5rem;
 }
+
+/* === ADRESSES CHECKOUT === */
+.address-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+}
+
+.address-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-xs {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 3px;
+}
+
+.delete-addr-form {
+    display: inline;
+}
+
+.new-address-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}

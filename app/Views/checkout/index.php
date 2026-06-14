@@ -1,42 +1,47 @@
 <?php require_once '../app/Views/layout/header.php'; ?>
-
 <section class="checkout">
     <h1>Finaliser ma commande</h1>
-
     <div class="checkout-grid">
-
         <div class="checkout-form">
             <h2>Adresse de livraison</h2>
-            <form action="/?url=checkout/confirm" method="POST">
 
-                <?php if (!empty($addresses)): ?>
-                <div class="saved-addresses">
-                    <p><strong>Adresses sauvegardées :</strong></p>
-                    <?php foreach ($addresses as $a): ?>
+            <?php if (!empty($addresses)): ?>
+            <div class="saved-addresses">
+                <p><strong>Adresses sauvegardées :</strong></p>
+
+                <?php foreach ($addresses as $a): ?>
+                <div class="address-row">
                     <label class="address-option">
-                        <input type="radio" name="saved_address" value="<?= $a['id'] ?>">
-                        <?= htmlspecialchars($a['rue']) ?>, <?= htmlspecialchars($a['cp']) ?> <?= htmlspecialchars($a['ville']) ?>
+                        <input type="radio" name="saved_address" value="<?= $a['id'] ?>"
+                            form="checkout-form"
+                            class="addr-radio"
+                            data-rue="<?= htmlspecialchars($a['rue']) ?>"
+                            data-cp="<?= htmlspecialchars($a['cp']) ?>"
+                            data-ville="<?= htmlspecialchars($a['ville']) ?>"
+                            data-pays="<?= htmlspecialchars($a['pays']) ?>">
+                        <span><?= htmlspecialchars($a['rue']) ?>, <?= htmlspecialchars($a['cp']) ?> <?= htmlspecialchars($a['ville']) ?></span>
                     </label>
-                    <?php endforeach; ?>
-                    <p class="or-divider">— ou saisir une nouvelle adresse —</p>
+                    <button type="submit" form="delete-<?= $a['id'] ?>" class="btn-danger btn-xs">✕</button>
+                    <form id="delete-<?= $a['id'] ?>" action="/?url=address/delete" method="POST">
+                        <input type="hidden" name="id" value="<?= $a['id'] ?>">
+                    </form>
                 </div>
-                <?php endif; ?>
+                <?php endforeach; ?>
 
-                <label>Rue
-                    <input type="text" name="rue" placeholder="12 rue des Oliviers" required>
-                </label>
-                <label>Code postal
-                    <input type="text" name="cp" placeholder="34500" required>
-                </label>
-                <label>Ville
-                    <input type="text" name="ville" placeholder="Béziers" required>
-                </label>
-                <label>Pays
-                    <input type="text" name="pays" value="France">
-                </label>
+                <p class="or-divider">— ou saisir une nouvelle adresse —</p>
+            </div>
+            <?php endif; ?>
 
-                <button type="submit" class="btn">Confirmer la commande →</button>
+            <form id="checkout-form" action="/?url=checkout/confirm" method="POST">
+                <div class="new-address-fields">
+                    <label>Rue <input type="text" name="rue" id="field-rue" placeholder="12 rue des Oliviers"></label>
+                    <label>Code postal <input type="text" name="cp" id="field-cp" placeholder="34500"></label>
+                    <label>Ville <input type="text" name="ville" id="field-ville" placeholder="Béziers"></label>
+                    <label>Pays <input type="text" name="pays" id="field-pays" value="France"></label>
+                </div>
+                <button type="submit" class="btn" style="margin-top:1rem">Confirmer la commande →</button>
             </form>
+
         </div>
 
         <div class="checkout-summary">
@@ -56,13 +61,23 @@
                 </tbody>
                 <tfoot>
                     <tr><td colspan="2">Sous-total</td><td><?= number_format($total, 2) ?> €</td></tr>
-                    <tr><td colspan="2">Frais de port</td><td><?= $total >= 50 ? 'Gratuit' : 'Calculés à l\'étape suivante' ?></td></tr>
+                    <tr><td colspan="2">Frais de port</td><td><?= $total >= 50 ? 'Gratuit' : "Calculés à l'étape suivante" ?></td></tr>
                     <tr><td colspan="2"><strong>Total estimé</strong></td><td><strong><?= number_format($total, 2) ?> €</strong></td></tr>
                 </tfoot>
             </table>
         </div>
-
     </div>
 </section>
+
+<script>
+document.querySelectorAll('.addr-radio').forEach(radio => {
+    radio.addEventListener('change', function() {
+        document.getElementById('field-rue').value   = this.dataset.rue;
+        document.getElementById('field-cp').value    = this.dataset.cp;
+        document.getElementById('field-ville').value = this.dataset.ville;
+        document.getElementById('field-pays').value  = this.dataset.pays;
+    });
+});
+</script>
 
 <?php require_once '../app/Views/layout/footer.php'; ?>
